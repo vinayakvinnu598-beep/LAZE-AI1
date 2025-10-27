@@ -52,3 +52,356 @@
   <p>Feel. Think. Reflect.</p>
 </body>
 </html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LAZE.AI — The Emotionally Adaptive AI Mirror</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1: #0f0c29;   /* deep indigo */
+      --bg2: #302b63;   /* violet */
+      --bg3: #06d6a0;   /* cyan */
+      --accent: #7b2cbf; /* neon violet */
+      --glass: rgba(255,255,255,0.06);
+      --glass-2: rgba(255,255,255,0.03);
+      --white-t: rgba(255,255,255,0.92);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%; margin:0; font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    body{
+      background: linear-gradient(120deg,var(--bg1),var(--bg2),#1f1330);
+      background-size: 400% 400%;
+      animation: bgShift 18s ease infinite;
+      color:var(--white-t);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
+    }
+    @keyframes bgShift{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+
+    /* container */
+    .card {
+      width: min(980px, 94vw);
+      min-height: 60vh;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      box-shadow: 0 10px 40px rgba(6,6,15,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      backdrop-filter: blur(6px) saturate(120%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    }
+
+    /* left hero */
+    .hero {
+      padding: 48px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:18px;
+    }
+    .kicker {
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      color:var(--white-t);
+      font-weight:600;
+      letter-spacing:0.6px;
+      font-size:13px;
+      width:fit-content;
+      box-shadow: 0 6px 20px rgba(11,10,25,0.25);
+    }
+    h1{
+      font-size: clamp(28px, 4.5vw, 44px);
+      margin:0;
+      line-height:1.02;
+      letter-spacing: -0.6px;
+      text-shadow: 0 6px 40px rgba(124,58,237,0.12);
+    }
+    .accent {
+      background:linear-gradient(90deg, #8a2be2, #06d6a0);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      font-weight:700;
+    }
+    p.lead{
+      margin:0;
+      opacity:0.86;
+      font-size:16px;
+      max-width:60ch;
+    }
+
+    /* small CTA */
+    .cta-row{
+      margin-top:14px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .btn {
+      padding:12px 16px;
+      border-radius:12px;
+      border: none;
+      cursor:pointer;
+      font-weight:600;
+      background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      color:var(--white-t);
+      box-shadow: 0 6px 18px rgba(11,10,25,0.28);
+    }
+    .btn-primary{
+      background: linear-gradient(90deg,#7B2CBF,#06D6A0);
+      color:white;
+      box-shadow: 0 10px 30px rgba(98,30,209,0.18);
+      transform:translateZ(0);
+    }
+
+    /* right panel = floating orb + mirror */
+    .panel {
+      position:relative;
+      padding:30px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      border-left: 1px solid rgba(255,255,255,0.02);
+    }
+
+    .orb-wrap{
+      position:relative;
+      width:320px;
+      height:320px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      perspective:1000px;
+    }
+    .orb {
+      width:170px;
+      height:170px;
+      border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), linear-gradient(135deg, rgba(123,44,191,0.9), rgba(6,214,160,0.85));
+      box-shadow: 0 30px 80px rgba(6,214,160,0.08), 0 6px 20px rgba(123,44,191,0.12), inset 0 -10px 30px rgba(0,0,0,0.25);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transform-style:preserve-3d;
+      animation: orbFloat 6s ease-in-out infinite;
+      cursor:default;
+    }
+
+    @keyframes orbFloat{
+      0%{ transform: translateY(0) rotateX(0) rotateY(0) }
+      50%{ transform: translateY(-10px) rotateX(6deg) rotateY(10deg) }
+      100%{ transform: translateY(0) rotateX(0) rotateY(0) }
+    }
+
+    .orb::after{
+      content:'';
+      position:absolute;
+      inset:0;
+      border-radius:50%;
+      box-shadow: 0 0 60px rgba(123,44,191,0.25), 0 0 120px rgba(6,214,160,0.08);
+      mix-blend-mode:screen;
+      pointer-events:none;
+      filter: blur(14px);
+      opacity:0.9;
+    }
+    .orb-inner {
+      width:86%;
+      height:86%;
+      border-radius:50%;
+      background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.18), rgba(255,255,255,0.01));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:transparent;
+      font-weight:700;
+      letter-spacing:1px;
+      transform: translateZ(30px) scale(0.98);
+      box-shadow: inset 0 2px 16px rgba(0,0,0,0.45);
+    }
+
+    /* tiny glow rings */
+    .ring {
+      position:absolute;
+      border-radius:50%;
+      pointer-events:none;
+      filter: blur(20px);
+      opacity:0.65;
+      animation: spin 18s linear infinite;
+    }
+    .ring.r1{ width: 420px; height:420px; background: radial-gradient(circle, rgba(123,44,191,0.06), transparent 40%); top: -60px; left: -40px; }
+    .ring.r2{ width: 520px; height:520px; background: radial-gradient(circle, rgba(6,214,160,0.03), transparent 30%); top:-110px; left:-110px; animation-duration:28s;}
+    @keyframes spin{ from{ transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+    /* typing area */
+    .typing {
+      margin-top:10px;
+      font-size:15px;
+      color:rgba(255,255,255,0.9);
+      min-height:42px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .dots{
+      width:12px;height:12px;border-radius:50%;
+      background:linear-gradient(90deg,#8a2be2,#06d6a0);
+      box-shadow: 0 6px 18px rgba(138,43,226,0.18);
+      opacity:0;
+      animation: blink 1.2s infinite;
+    }
+    @keyframes blink{ 0%{opacity:0} 50%{opacity:1} 100%{opacity:0} }
+
+    /* footer / small notes */
+    .foot {
+      position:absolute;
+      bottom:12px; left:18px; font-size:12px; opacity:0.7;
+    }
+
+    /* responsive */
+    @media (max-width:940px){
+      .card{ grid-template-columns:1fr; padding:18px; gap:20px}
+      .panel{ order:-1; padding-top:12px}
+      .orb-wrap{ width:260px;height:260px}
+    }
+  </style>
+</head>
+<body>
+  <div class="card" role="main" aria-label="LAZE AI landing">
+    <div class="hero">
+      <div class="kicker">LAZE.AI — Live Alpha</div>
+      <h1><span class="accent">LAZE.AI</span> — Your Emotional Mirror</h1>
+      <p class="lead">An AI that adapts its tone, color and presence to how you feel. Not just answers — a reflection.</p>
+
+      <div class="cta-row" aria-hidden>
+        <button class="btn btn-primary" id="launchBtn">Open your mirror</button>
+        <button class="btn" id="demoBtn">Quick demo</button>
+      </div>
+
+      <div class="typing" id="typeArea" aria-live="polite">
+        <div class="dots" id="dot"></div>
+        <div id="typingText" style="opacity:0"></div>
+      </div>
+
+      <div class="foot">Made with care • Privacy-first • Prototype</div>
+    </div>
+
+    <div class="panel" aria-hidden>
+      <div class="orb-wrap">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+
+        <div class="orb" id="orb">
+          <div class="orb-inner" id="orbInner"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tiny interaction + typing effect
+    const lines = [
+      "Hello — I'm LAZE.AI.",
+      "I listen. I mirror. I help you feel clearer.",
+      "Try pressing 'Quick demo' to see me respond."
+    ];
+
+    const typingText = document.getElementById('typingText');
+    const dot = document.getElementById('dot');
+    const orb = document.getElementById('orb');
+    const orbInner = document.getElementById('orbInner');
+    const launchBtn = document.getElementById('launchBtn');
+    const demoBtn = document.getElementById('demoBtn');
+
+    function typeLine(text, cb){
+      typingText.style.opacity = 1;
+      typingText.textContent = "";
+      let i=0;
+      const t = setInterval(()=> {
+        typingText.textContent += text[i++] || '';
+        if(i > text.length){
+          clearInterval(t);
+          setTimeout(cb, 700);
+        }
+      }, 28);
+    }
+
+    async function runIntro(){
+      dot.style.opacity = 1;
+      for(let l of lines){
+        await new Promise(res => typeLine(l, res));
+      }
+      dot.style.opacity = 0;
+    }
+
+    // orb hover + follow pointer
+    document.addEventListener('mousemove', e => {
+      const r = orb.getBoundingClientRect();
+      const cx = r.left + r.width/2;
+      const cy = r.top + r.height/2;
+      const dx = (e.clientX - cx)/30;
+      const dy = (e.clientY - cy)/30;
+      orb.style.transform = `translateY(-6px) rotateX(${dy}deg) rotateY(${dx}deg)`;
+    });
+
+    // demo: simulate mood changes (color + pulse)
+    const moods = [
+      {bg1:'#0f0c29', bg2:'#302b63', orbA: [123,44,191], orbB: [6,214,160], pulse:1},
+      {bg1:'#0f1724', bg2:'#0f3750', orbA: [6,214,160], orbB: [94,241,242], pulse:1.6},
+      {bg1:'#1a001a', bg2:'#5d145d', orbA: [255,80,140], orbB: [123,44,191], pulse:0.9}
+    ];
+
+    function applyMood(m){
+      document.documentElement.style.setProperty('--bg1', m.bg1);
+      document.documentElement.style.setProperty('--bg2', m.bg2);
+      const g = `radial-gradient(circle at 30% 30%, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), linear-gradient(135deg, rgba(${m.orbA.join(',')},0.95), rgba(${m.orbB.join(',')},0.85))`;
+      orb.style.background = g;
+      orb.style.boxShadow = `0 30px 80px rgba(${m.orbB.join(',')},0.08), 0 6px 20px rgba(${m.orbA.join(',')},0.12)`;
+      orb.style.animationDuration = `${4 + (m.pulse*2)}s`;
+    }
+
+    let moodIndex = 0;
+    demoBtn.addEventListener('click', () => {
+      moodIndex = (moodIndex+1) % moods.length;
+      applyMood(moods[moodIndex]);
+      // quick typed reply
+      typeLine(["I sense calm.","I sense curiosity.","I sense warmth."][moodIndex], ()=>{});
+    });
+
+    launchBtn.addEventListener('click', ()=> {
+      // small visual action to simulate "opening the mirror"
+      orbInner.style.transform = 'translateZ(40px) scale(1)';
+      orbInner.style.transition = 'transform 420ms cubic-bezier(.2,.9,.3,1)';
+      setTimeout(()=> {
+        orbInner.style.transform = 'translateZ(10px) scale(0.98)';
+      }, 900);
+      typeLine("Opening your mirror…", ()=>{ dot.style.opacity = 0;});
+    });
+
+    // start intro after small delay
+    setTimeout(runIntro, 800);
+
+    // accessibility: reduce motion preference
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if(mq.matches){
+      document.querySelectorAll('*').forEach(n => n.style.animationDuration = '0.001s');
+    }
+  </script>
+</body>
+</html>
